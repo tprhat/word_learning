@@ -2,10 +2,12 @@ require "securerandom"
 module GameLogic
   extend ActiveSupport::Concern
 
+  # different game modes have different session entries
   def setup_game(session_prefix:)
     session["#{session_prefix}_score"] ||= 0
     session["#{session_prefix}_round"] ||= 1
 
+    # reset the score if we move to the home page
     if params.except(:controller, :action).empty?
       session["#{session_prefix}_score"] = 0
       session["#{session_prefix}_round"] = 1
@@ -33,7 +35,7 @@ module GameLogic
         Stat.create!(
           user: User.find(s[:user_id]),
           round: session["#{session_prefix}_round"],
-          guess_id: (params[:answer] == "correct" ? 1 : 0), # adjust as needed
+          guess_id: (params[:answer] == "correct" ? 1 : 0),
           correct_id: session["#{session_prefix}_current_id"],
           game_id: session["#{session_prefix}_game_id"],
           current_points: session["#{session_prefix}_score"]
@@ -41,6 +43,7 @@ module GameLogic
       end
     end
 
+    # game ends after 10 rounds
     if session["#{session_prefix}_round"] > 10
       @game_over = true
       @score = session["#{session_prefix}_score"]
@@ -55,18 +58,20 @@ module GameLogic
     # pick a new word if not selected for this round, new word only after clicking "next"
     if session["#{session_prefix}_current_id"].nil?
     @word = Word.order("RANDOM()").first
-    #       # remove the definition keyword only when the user is guessing
+    # remove the definition keyword only when the user is guessing
     @word.definition = @word.definition.gsub(/#{Regexp.escape(@word.word)}/i, "____")
     # add word id to the session
     session["#{session_prefix}_current_id"] = @word.id
+
     # this won't work because sessions can only store simple data, not models
     # session["#{session_prefix}_current_id"] = @word
     else
-    @word = Word.find(session["#{session_prefix}_current_id"])
+      @word = Word.find(session["#{session_prefix}_current_id"])
     end
+    # add 2 wrong answer
     @distractors = Word.where.not(id: @word.id).order("RANDOM()").limit(2)
     @distractors.each do |distractor|
-    distractor.definition =distractor.definition.gsub(/\b#{Regexp.escape(distractor.word)}\b/i, "____")
+      distractor.definition =distractor.definition.gsub(/\b#{Regexp.escape(distractor.word)}\b/i, "____")
     end
   end
 end

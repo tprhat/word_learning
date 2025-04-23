@@ -6,6 +6,7 @@ class StatsController < ApplicationController
     @games = @all_time_stats.group_by(&:game_id)
 
     sorted_games = @games.sort_by { |game_id, stats| stats.min_by(&:created_at).created_at }
+    # create data to show on the line chart
     @chart_data = sorted_games.each_with_index.map do |(_game_id, stats), index|
       [ index + 1, stats.map(&:current_points).max ]
     end

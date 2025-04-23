@@ -14,8 +14,8 @@ Before you begin, ensure you have the following installed on your system:
 It is recommended to fork the repository first so you can make changes if needed and then clone the repository:
 
 ```sh
-git clone https://github.com/your-username/word_learn.git
-cd word_learn
+git clone https://github.com/tprhat/word_learning.git
+cd word_learning
 ```
 
 ## Setup and Installation
@@ -60,3 +60,8 @@ Check the following files for additional configuration details:
 - `.ruby-version` – specifies the Ruby version
 - `Gemfile` – lists gem dependencies
 - `config/environments/` – environment-specific settings
+
+
+## License
+
+[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
