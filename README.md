@@ -1,24 +1,62 @@
-# README
+# Word Learn
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a Ruby on Rails web application for learning words through interactive games. 
+The game can be played both anonymously or logged in, while logged in the game records your stats to the database which you can check out in the "My stats" page.
 
-Things you may want to cover:
+## Prerequisites
 
-* Ruby version
+Before you begin, ensure you have the following installed on your system:
 
-* System dependencies
+- [Ruby on Rails](https://rubyonrails.org) 
 
-* Configuration
+## Cloning the Repository
 
-* Database creation
+It is recommended to fork the repository first so you can make changes if needed and then clone the repository:
 
-* Database initialization
+```sh
+git clone https://github.com/your-username/word_learn.git
+cd word_learn
+```
 
-* How to run the test suite
+## Setup and Installation
 
-* Services (job queues, cache servers, search engines, etc.)
+1. **Install Gems**
 
-* Deployment instructions
+   Install the required gems using Bundler:
 
-* ...
+   ```sh
+   bundle install
+   ```
+
+2. **Setup the Database**
+
+   Create and initialize the database:
+
+   ```sh
+   bin/rails db:create
+   bin/rails db:migrate
+   ```
+
+   Import the word data from the csv
+   ```sh
+   bin/rails db:import_dict
+   ```
+
+## Running the Application
+
+Start the Rails server:
+
+```sh
+bin/rails server
+```
+
+Now open your browser and navigate to [http://localhost:3000](http://localhost:3000).
+
+
+## Additional Configuration
+
+Check the following files for additional configuration details:
+
+- `.ruby-version` – specifies the Ruby version
+- `Gemfile` – lists gem dependencies
+- `config/environments/` – environment-specific settings
