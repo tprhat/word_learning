@@ -1,0 +1,22 @@
+<div class="word-game-container">
+  <%= render "shared/navbar" %>
+  <h1>Your Stats</h1>
+
+  <section class="stats-all-time">
+    <h2>All Time</h2>
+    <p>Total Guesses: <%= @all_time_stats.count %></p>
+    <p>Total Points: <%= @all_time_stats.sum(&:guess_id) %></p>
+    <%= line_chart @chart_data, xtitle: "Game", ytitle: "Points", library: { scales: { x: { ticks: { stepSize: 1, precision: 0 } } } } %>
+  </section>
+
+  <section class="stats-per-game">
+    <h2>Stats Per Game</h2>
+    <% @per_game_stats.each_with_index do |(_game_id, stats), index| %>
+      <div class="game-stats">
+        <h3>Game #: <%= index + 1 %></h3>
+        <p>Rounds: <%= stats[:rounds] %></p>
+        <p>Total Points: <%= stats[:total_points] %></p>
+      </div>
+    <% end %>
+  </section>
+</div>

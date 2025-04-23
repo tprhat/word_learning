@@ -1,0 +1,49 @@
+<div class="word-game-container">
+  <%= render "shared/navbar" %>
+  <h1 class="title"><%= link_to "Guess the Word", root_path %></h1>
+
+  <% if @game_over %>
+    <section class="game-over-section">
+      <h2>Game Over!</h2>
+      <p>Your score: <%= @score %> / 10</p>
+      <%= link_to "Play Again", root_path, class: "btn" %>
+    </section>
+  <% else %>
+    <div class="status-bar">
+      <span>Round <%= @round %> of 10</span>
+      <span>Score: <%= @score %></span>
+    </div>
+    <% if @result %>
+      <div class="result-message"><strong><%= @result %></strong></div>
+      <section class="word-section">
+        <h2><%= @word.word.capitalize %></h2>
+      </section>
+    <% else %>
+      <section class="definition-section">
+      <h2><%= @word.definition %></h2>
+      </section>
+    <% end %>
+
+    <% unless @show_answer %>
+      <section class="choices-section">
+        <% @choices.each do |word, correctness| %>
+          <%= form_with url: definitions_path, method: :get, local: true do %>
+            <%= hidden_field_tag :answer, correctness %>
+            <label>
+              <button class="button-submit-answer" type="submit">
+                <%= word.capitalize %>
+              </button>
+            </label>
+          <% end %>
+        <% end %>
+      </section>
+    <% else %>
+      <section class="definition-section">
+        <strong>Word:</strong> <%= @word.definition %>
+      </section>
+      <%= form_with url: definitions_path, method: :get, local: true do %>
+        <%= submit_tag "Next" %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

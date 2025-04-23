@@ -1,0 +1,10 @@
+<div class="word-game-container">
+  <%= render "shared/navbar" %>
+
+  <h1>Welcome to Word Learn!</h1>
+  <p class="home-intro">Choose your game mode:</p>
+  <ul class="home-mode-list">
+    <li><%= link_to "Guess the Definition", words_path, class: "home-btn" %></li>
+    <li><%= link_to "Guess the Word", definitions_path, class: "home-btn" %></li>
+  </ul>
+</div>

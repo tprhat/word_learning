@@ -1,0 +1,15 @@
+  <nav class="navbar">
+    <div class="navbar-left">
+      <%= link_to "Home", root_path, class: "nav-link" %>
+      <% if authenticated? %>
+        <%= link_to "My Stats", stats_path, class: "nav-link" %>
+      <% end %>
+    </div>
+    <div class="navbar-right">
+      <% if authenticated? %>
+        <%= button_to "Log out", session_path, method: :delete, class: "nav-link logout" %>
+      <% else %>
+        <%= link_to "Login", new_session_path, class: "nav-link" %>
+      <% end %>
+    </div>
+  </nav>
